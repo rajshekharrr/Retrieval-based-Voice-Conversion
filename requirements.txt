@@ -1,13 +1,21 @@
+# Core dependencies for RVC.
+# Specific versions for numba, numpy, and faiss-cpu are commented out as they cause conflicts in Colab's Python 3.11/CUDA 12 environment.
+# We will explicitly install faiss-gpu-cu12 in the Colab notebook.
+
 aria2
 joblib>=1.1.0
-numba==0.56.4
-numpy==1.23.5
+# numba==0.56.4  # Commented out due to Python 3.11 incompatibility
+# numpy==1.23.5  # Commented out due to conflict with Colab's default numpy
 scipy
-librosa==0.9.1
-llvmlite==0.39.0
-fairseq==0.12.2
-faiss-cpu==1.7.3
-gradio==3.34.0
+# librosa==0.9.1 # Commented out to allow newer, compatible version
+# llvmlite==0.39.0 # Commented out to allow newer, compatible version, often related to numba
+# fairseq==0.12.2 # If this causes issues, we may need to comment it out or find a newer compatible version
+# faiss-cpu==1.7.3 # Commented out, we will use faiss-gpu-cu12
+
+# Explicitly adding faiss-gpu-cu12 for GPU acceleration in Colab's CUDA 12 environment
+faiss-gpu-cu12
+
+# gradio==3.34.0 # Commented out as we are avoiding WebUI/Gradio in Colab due to policy and resource issues.
 Cython
 pydub>=0.25.1
 soundfile>=0.12.1
@@ -37,12 +45,13 @@ absl-py>=1.2.0
 audioread
 uvicorn>=0.21.1
 colorama>=0.4.5
-pyworld==0.3.2
+pyworld==0.3.2 # Keep this specific version for pyworld as it's often sensitive
 httpx
-onnxruntime; sys_platform == 'darwin'
-onnxruntime-gpu; sys_platform != 'darwin'
+# onnxruntime; sys_platform == 'darwin' # Specific for macOS, not needed in Colab (Linux)
+# onnxruntime-gpu; sys_platform != 'darwin' # We'll handle onnxruntime-gpu as a separate install in Colab cell if needed
+
 torchcrepe==0.0.20
-fastapi==0.88
+fastapi==0.88 # FastAPI is used by the WebUI, but may also be a dependency for some RVC core operations. Keep for now.
 torchfcpe
 ffmpy==0.3.1
 python-dotenv>=1.0.0
